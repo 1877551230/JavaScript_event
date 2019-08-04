@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<title>事件相关</title>
+		<meta charset="UTF-8"/>
+		<script type="text/javascript" language="javascript">
+			function aa(){
+				//处理代码
+				return true;
+			}
+			function bb(){
+				//处理代码
+				return true;
+			}
+			function cc(){
+				if(true){
+					document.forms[2].submit();
+				}
+			}
+			function dd(flag){
+				if(flag=='a'){
+					document.forms[3].action="xxx.html";
+				}else if(flag=='b'){
+					document.forms[3].action="yyy.html";
+				}else if(flag=='c'){
+					document.forms[3].action="zzz.html";
+				}
+				document.forms[3].submit();
+			}
+
+			function ff(e){
+				alert(e.clientX+":"+e.clientY);
+				//e.srcElement,ie浏览器
+				//e.target,firefox浏览器
+				var obj=e.srcElement||e.target;
+				alert(obj.nodeName);
+			}
+			window.onkeypress=function(){
+			    var div_ele=document.getElementById("divid");
+				console.log(event.keyCode);
+				if(event.keyCode==119){
+					div_ele.style.top=div_ele.offsetTop-20;
+				}
+				if(event.keyCode==100){
+					div_ele.style.left=(div_ele.offsetLeft+20);
+				}
+				if(event.keyCode==97){
+					div_ele.style.left=div_ele.offsetLeft-20;
+				}
+				if(event.keyCode==115){
+					div_ele.style.top=div_ele.offsetTop+20;
+				}
+			}
+			function cancelBubble(e){
+				alert("input button");
+				//取消冒泡:
+				if(e.stopPropagation){
+				    //火狐和谷歌浏览器的取消冒泡
+					e.stopPropagation();
+				}else{
+					//ie浏览器的取消冒泡
+					e.cancelBubble=true;
+				}
+			}
+		</script>
+		<style>
+			#divid{
+				border:1px solid red;
+				width:50px;
+				position: absolute;
+			}
+			.s1{
+			    border:1px solid red;
+				width:200px;
+				padding:30px;
+				margin:20px auto;
+			}
+			.s2{
+			    border:1px dotted green;
+				padding:20px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<!--onsubmit事件-->
+		<form action="test.html" method="post"
+		      onsubmit="return aa();">
+			<input name="userName" value="zhangsan" />
+			<input type="submit" value="提交" />
+			<input type="reset" value="重置" />				
+		</form>
+		
+		<br />
+		<!--表单提交的方式1-->
+		<form action="test.html" method="post">
+			<input name="userName" value="zhangsan" />
+			<input type="submit" value="提交" onclick="return bb();" />
+			<input type="reset" value="重置" />		
+		</form>
+		<br />
+		<!--表单提交的方式2-->
+		<form action="test.html" method="post">
+			<input name="userName" value="zhangsan" />
+			<input type="button" value="提交" onclick="cc();" />
+			<input type="reset" value="重置" />		
+		</form>
+		
+		<br />
+		<!--表单提交的方式3-->
+		<form action="" method="post">
+			<input name="userName" value="zhangsan" />
+			<input type="button" value="提交1" onclick="dd('a');" />
+			<input type="button" value="提交2" onclick="dd('b');" />
+			<input type="button" value="提交3" onclick="dd('c');" />
+			<input type="reset" value="重置" />		
+		</form>
+		<br />
+		<div onclick="ff(event)">event对象测试</div>
+		<br />
+		<div id="divid">哈哈</div>
+		<!--事件冒泡演示-->
+		<div class="s1" onclick="alert('div')">
+			<span class="s2" onclick="alert('span')">
+				<input type="button" value="冒泡演示" 
+				       onclick="cancelBubble(event);"/>
+			</span>
+	    </div>
+		
+		
+	</body>
+</html>
